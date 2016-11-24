@@ -323,6 +323,12 @@ impl Wrench {
                                        auxiliary_lists);
     }
 
+    pub fn refresh(&mut self) {
+        self.frame_start_sender.push(time::SteadyTime::now());
+
+        self.api.generate_frame();
+    }
+
     pub fn render(&mut self) {
         self.renderer.update();
         self.renderer.render(self.window_size);
