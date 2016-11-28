@@ -181,7 +181,10 @@ impl YamlFrameReader {
             }).collect()
         };
 
-        let rect = Rect::new(Point2D::new(0.0, 0.0), wrench.window_size_f32());
+        // TODO(gw): We could optionally use the WR API to query glyph dimensions
+        //           here and calculate the bounding region here if we want to.
+        let rect = item["bounds"].as_rect()
+                                 .expect("Text items require bounds [for now]");
 
         let (builder, aux_builder) = self.both_builders();
         let clip = item["clip"].as_clip_region(aux_builder).unwrap_or(*clip_region);
